@@ -5,6 +5,7 @@ const cors = require('cors');
 const reader = require('any-text');
 const multer = require('multer');
 const qs = require('querystring')
+const path = require('path')
 
 const app = express();
 
@@ -17,6 +18,13 @@ const options = {
     }
 }
 
+if(!fs.existsSync(path.join(__dirname, 'tmp'))){
+    fs.mkdirSync(path.join(__dirname, 'tmp'), (err) => {
+        if(err){
+            console.log(err)
+        }
+    })
+}
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'tmp/');
